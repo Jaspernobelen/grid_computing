@@ -151,31 +151,31 @@ def createspace():
             subprocess.call(['rm','-r',temporary_folder_path])                               # Double check; if something went wrong, remove the existing temporary folder.
         subprocess.call(['mkdir',temporary_folder_path])
 
-def synchronizer():
-#    subprocess.call(['/project/datagrid/anaconda/bin/python',statescript])
+def state_of_files():
     statescript_output = subprocess.Popen(['/project/datagrid/anaconda/bin/python',statescript],stdout = subprocess.PIPE,
                           stderr=subprocess.PIPE)
     o,e = statescript_output.communicate()
     lines = o.split('\n')
+    global paths_checked
     paths_checked = []
     state_of_paths = []
     folder_names = []
     tarfiles = []
- #   print(lines)
     for line in lines:
         all_lines = line.split()
-  #      print(all_lines)
         if len(all_lines) < 1:
             continue
         paths_checked.append(all_lines[0])
-   #     print(all_lines[0])
         tarfiles.append(all_lines[0].split('/')[-1])
         state_of_paths.append(all_lines[1])
-#    print(state_of_paths)
-#    print(paths_checked)
+    return tarfiles, state_of_paths
+
+def synchronizer():
+    tar_files, state_of_paths = state_of_files()
     a = 0
     print(len(paths_checked))
     while a < len(paths_checked):
+        tarfiles, state_of_paths = state_of_files()
         for i in range(len(paths_checked)):
             if 'ONLINE' in state_of_paths[i]:
                 print('Copying file: ' + tarfiles[i])
