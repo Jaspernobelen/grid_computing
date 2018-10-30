@@ -43,19 +43,21 @@ import time
 
 # Testcase maken
 
+username = 'tmons'
+
 # MAKE A TARBALL
 #            We start with exporting your ui.sara.nl GRID proxy. I have placed mine in /user/tmons/Modulation/gridcomputing/tmp/x509up_u8962.
 #os.system('export /project/datagrid/anaconda/bin/python')
-os.environ['X509_USER_PROXY'] = '/user/tmons/Modulation/gridcomputing/tmp/robot_proxy'
+os.environ['X509_USER_PROXY'] = '/user/'+username+'/Modulation/gridcomputing/tmp/robot_proxy'
 
 #            Definition of all the directories
-logfile_dir = "/user/tmons/Modulation/gridcomputing/log_files/"
-database_dir = "/user/tmons/Modulation/gridcomputing/databases/"
+logfile_dir = "/user/'+username+'/Modulation/gridcomputing/log_files/"
+database_dir = "/user/'+username+'/Modulation/gridcomputing/databases/"
 #inputlocal_dir = "/data/modulation/Raw_Data/combined/"
 # Where is my raw data stored LOCALLY?
 inputlocal_dir = "/data/modulation/Raw_Data/test_copy/"
-# outputlocal_dir = "/dcache/xenon/tmons/Modulation/processed/"                                                                  # Where is my processed data stored LOCALLY?
-outputlocal_dir = "/dcache/xenon/tmons/Modulation/processed/"
+# outputlocal_dir = "/dcache/xenon/'+username+'/Modulation/processed/"                                                                  # Where is my processed data stored LOCALLY?
+outputlocal_dir = "/dcache/xenon/'+username+'/Modulation/processed/"
 # Where should I copy RAW data to?
 inputgrid_dir = "gsiftp://gridftp.grid.sara.nl:2811/pnfs/grid.sara.nl/data/projects.nl/modulations/Tape/test"
 # Where should I copy PROCESSED data to?
@@ -74,9 +76,9 @@ json_ana = database_dir + 'analysis_database.json'
 
 
 # First check -- are there any jobs running?
-username = "tmons"
-number_of_queued_jobs = "qselect -u " + username + " -s Q | wc -l"
-number_of_running_jobs = "qselect -u " + username + " -s R | wc -l"
+
+number_of_queued_jobs = 'qselect -u ' + username + ' -s Q | wc -l'
+number_of_running_jobs = 'qselect -u ' + username + ' -s R | wc -l'
 
 # If we run our script every day, we shall get a log file every day!
 date = str(datetime.date.today())
